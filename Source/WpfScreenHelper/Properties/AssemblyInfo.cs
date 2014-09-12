@@ -22,9 +22,10 @@ using System.Runtime.InteropServices;
 [assembly: Guid("e75f4c20-72a3-4e02-9b94-a0c4e6e9c127")]
 
 // WpfScreenHelper version number: <major>.<minor>.<non-breaking-feature>.<build>
-[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
 
 // Note: until version 1.0 expect breaking changes on 0.X versions.
 
+// 0.3.0.0  Modified Screen public signature to be identical with the Windows Forms ones (http://referencesource.microsoft.com/#System.Windows.Forms/ndp/fx/src/winforms/Managed/System/WinForms/Screen.cs)
 // 0.2.0.0  Changed target framework to 4.0 to be compatible with old software
 // 0.1.0.0  Initial

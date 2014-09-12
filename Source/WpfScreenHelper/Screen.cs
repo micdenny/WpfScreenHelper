@@ -44,8 +44,8 @@ namespace WpfScreenHelper
             if (!multiMonitorSupport || monitor == (IntPtr)PRIMARY_MONITOR)
             {
                 this.Bounds = SystemInformation.VirtualScreen;
-                this.IsPrimary = true;
-                this.Name = "DISPLAY";
+                this.Primary = true;
+                this.DeviceName = "DISPLAY";
             }
             else
             {
@@ -58,9 +58,9 @@ namespace WpfScreenHelper
                     info.rcMonitor.right - info.rcMonitor.left,
                     info.rcMonitor.bottom - info.rcMonitor.top);
 
-                this.IsPrimary = ((info.dwFlags & MONITORINFOF_PRIMARY) != 0);
+                this.Primary = ((info.dwFlags & MONITORINFOF_PRIMARY) != 0);
 
-                this.Name = new string(info.szDevice).TrimEnd((char)0);
+                this.DeviceName = new string(info.szDevice).TrimEnd((char)0);
             }
             hmonitor = monitor;
         }
@@ -97,13 +97,13 @@ namespace WpfScreenHelper
         /// Gets the device name associated with a display.
         /// </summary>
         /// <returns>The device name associated with a display.</returns>
-        public string Name { get; private set; }
+        public string DeviceName { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether a particular display is the primary device.
         /// </summary>
         /// <returns>true if this display is primary; otherwise, false.</returns>
-        public bool IsPrimary { get; private set; }
+        public bool Primary { get; private set; }
 
         /// <summary>
         /// Gets the primary display.
@@ -115,7 +115,7 @@ namespace WpfScreenHelper
             {
                 if (multiMonitorSupport)
                 {
-                    return AllScreens.FirstOrDefault(t => t.IsPrimary);
+                    return AllScreens.FirstOrDefault(t => t.Primary);
                 }
                 return new Screen((IntPtr)PRIMARY_MONITOR);
             }
