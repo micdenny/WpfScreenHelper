@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>WpfScreenHelper</id>
-    <version>0.2.0.0</version>
+    <version>0.3.0.0</version>
     <title>Screen Helper for WPF</title>
     <authors>Michael Denny, Contributors (see GitHub repo)</authors>
     <owners>Michael Denny</owners>
