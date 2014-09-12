@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>WpfScreenHelper</id>
+    <version>0.1.0.0</version>
+    <title>WpfScreenHelper</title>
+    <authors>Michael Denny, Contributors (see GitHub repo)</authors>
+    <owners>Michael Denny</owners>
+    <licenseUrl>https://github.com/micdenny/WpfScreenHelper/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/micdenny/WpfScreenHelper</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Porting of Windows Forms Screen helper for Windows Presentation Foundation (WPF). It avoids dependencies on Windows Forms libraries when developing in WPF.</description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright Michael Denny 2014</copyright>
+    <tags>Wpf Screen Monitor Display Helper</tags>
+  </metadata>
+</package>
