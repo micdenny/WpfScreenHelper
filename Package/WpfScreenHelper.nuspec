@@ -3,7 +3,7 @@
   <metadata>
     <id>WpfScreenHelper</id>
     <version>0.1.0.0</version>
-    <title>WpfScreenHelper</title>
+    <title>Screen Helper for WPF</title>
     <authors>Michael Denny, Contributors (see GitHub repo)</authors>
     <owners>Michael Denny</owners>
     <licenseUrl>https://github.com/micdenny/WpfScreenHelper/blob/master/LICENSE</licenseUrl>
@@ -13,6 +13,6 @@
     <releaseNotes>
     </releaseNotes>
     <copyright>Copyright Michael Denny 2014</copyright>
-    <tags>Wpf Screen Monitor Display Helper</tags>
+    <tags>WPF Screen Monitor Display Helper</tags>
   </metadata>
 </package>
