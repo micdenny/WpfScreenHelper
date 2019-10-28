@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;netcoreapp3.0</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>WpfScreenHelper</AssemblyName>
+    <Title>Screen Helper for WPF</Title>
+    <Authors>Michael Denny, Contributors (see GitHub repo)</Authors>
+    <PackageId>WpfScreenHelper</PackageId>
+    <PackageProjectUrl>https://github.com/micdenny/WpfScreenHelper</PackageProjectUrl>
+    <Description>Porting of Windows Forms Screen helper for Windows Presentation Foundation (WPF). It avoids dependencies on Windows Forms libraries when developing in WPF.</Description>
+    <Copyright>Copyright Michael Denny 2019</Copyright>
+    <PackageTags>WPF Screen Monitor Display Helper</PackageTags>
+    <RepositoryUrl>https://github.com/micdenny/WpfScreenHelper</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>0.4.0</Version>
+  </PropertyGroup>
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\..\package\" />
+    <Message Importance="high" Text="Successfully copied package to the root package folder." />
+  </Target>
+
+</Project>

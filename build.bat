@@ -1,8 +1,15 @@
-"C:\Program Files (x86)\MSBuild\12.0\Bin\amd64\msbuild.exe" "Source\WpfScreenHelper.sln" /property:Configuration=Release;OutDir=..\..\bin
+@echo off
 
-rmdir /S /Q Package\lib >nul 2>&1
-xcopy bin\*.* Package\lib\net40 /E /I /R /Y
+echo Removing old packages...
+del Package\*.nupkg >nul 2>&1
 
-Tools\NuGet\NuGet.exe pack Package\WpfScreenHelper.nuspec -OutputDirectory Package
+echo Building...
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" "WpfScreenHelper.sln" /property:Configuration=Release
+
+echo.
+echo ------------------------------------------------
+echo ---- BUILD DONE: check the 'package' folder ----
+echo ------------------------------------------------
+echo.
 
 pause
