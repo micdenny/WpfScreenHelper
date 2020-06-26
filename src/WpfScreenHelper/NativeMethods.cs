@@ -34,8 +34,8 @@ namespace WpfScreenHelper
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         public static extern bool GetCursorPos([In, Out] POINT pt);
-        
-        public static HandleRef NullHandleRef;
+
+        public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
 
         public delegate bool MonitorEnumProc(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lParam);
 
