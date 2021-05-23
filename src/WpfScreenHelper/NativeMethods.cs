@@ -7,21 +7,62 @@ namespace WpfScreenHelper
 {
     internal static class NativeMethods
     {
+        public delegate bool MonitorEnumProc(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lParam);
+
+        public enum DpiType
+        {
+            EFFECTIVE = 0,
+            ANGULAR = 1,
+            RAW = 2
+        }
+
+        public enum PROCESS_DPI_AWARENESS
+        {
+            PROCESS_DPI_UNAWARE = 0,
+            PROCESS_SYSTEM_DPI_AWARE = 1,
+            PROCESS_PER_MONITOR_DPI_AWARE = 2
+        }
+
+        public enum SystemMetric
+        {
+            SM_CXSCREEN = 0,
+            SM_CYSCREEN = 1,
+            SM_XVIRTUALSCREEN = 76,
+            SM_YVIRTUALSCREEN = 77,
+            SM_CXVIRTUALSCREEN = 78,
+            SM_CYVIRTUALSCREEN = 79,
+            SM_CMONITORS = 80
+        }
+
+        public const int SPI_GETWORKAREA = 48;
+
+        public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
+
+        [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
+        [ResourceExposure(ResourceScope.None)]
+        public static extern int GetProcessDpiAwareness(IntPtr hprocess, out PROCESS_DPI_AWARENESS value);
+
+        [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
+        [ResourceExposure(ResourceScope.None)]
+        public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX,
+            [Out] out uint dpiY);
+
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
+        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In] [Out] MONITORINFOEX info);
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT rcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
-        
+        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT rcClip, MonitorEnumProc lpfnEnum,
+            IntPtr dwData);
+
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
         public static extern IntPtr MonitorFromWindow(HandleRef handle, int flags);
 
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern int GetSystemMetrics(int nIndex);
+        public static extern int GetSystemMetrics(SystemMetric nIndex);
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
@@ -33,11 +74,7 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool GetCursorPos([In, Out] POINT pt);
-
-        public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
-
-        public delegate bool MonitorEnumProc(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lParam);
+        public static extern bool GetCursorPos([In] [Out] POINT pt);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
@@ -57,10 +94,10 @@ namespace WpfScreenHelper
 
             public RECT(Rect r)
             {
-                this.left = (int)r.Left;
-                this.top = (int)r.Top;
-                this.right = (int)r.Right;
-                this.bottom = (int)r.Bottom;
+                left = (int) r.Left;
+                top = (int) r.Top;
+                right = (int) r.Right;
+                bottom = (int) r.Bottom;
             }
 
             public static RECT FromXYWH(int x, int y, int width, int height)
@@ -68,10 +105,7 @@ namespace WpfScreenHelper
                 return new RECT(x, y, x + width, y + height);
             }
 
-            public Size Size
-            {
-                get { return new Size(this.right - this.left, this.bottom - this.top); }
-            }
+            public Size Size => new Size(right - left, bottom - top);
         }
 
         // use this in cases where the Native API takes a POINT not a POINT*
@@ -81,6 +115,7 @@ namespace WpfScreenHelper
         {
             public int x;
             public int y;
+
             public POINTSTRUCT(int x, int y)
             {
                 this.x = x;
@@ -116,19 +151,21 @@ namespace WpfScreenHelper
         public class MONITORINFOEX
         {
             internal int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
+            internal int dwFlags = 0;
             internal RECT rcMonitor = new RECT();
             internal RECT rcWork = new RECT();
-            internal int dwFlags = 0;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] internal char[] szDevice = new char[32];
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            internal char[] szDevice = new char[32];
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public class COMRECT
         {
-            public int left;
-            public int top;
-            public int right;
             public int bottom;
+            public int left;
+            public int right;
+            public int top;
 
             public COMRECT()
             {
@@ -136,10 +173,10 @@ namespace WpfScreenHelper
 
             public COMRECT(Rect r)
             {
-                this.left = (int)r.X;
-                this.top = (int)r.Y;
-                this.right = (int)r.Right;
-                this.bottom = (int)r.Bottom;
+                left = (int) r.X;
+                top = (int) r.Y;
+                right = (int) r.Right;
+                bottom = (int) r.Bottom;
             }
 
             public COMRECT(int left, int top, int right, int bottom)
@@ -160,10 +197,5 @@ namespace WpfScreenHelper
                 return "Left = " + left + " Top " + top + " Right = " + right + " Bottom = " + bottom;
             }
         }
-
-        public const int SM_CMONITORS = 80,
-                         SM_CXSCREEN = 0,
-                         SM_CYSCREEN = 1,
-                         SPI_GETWORKAREA = 48;
     }
 }
