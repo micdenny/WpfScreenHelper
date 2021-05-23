@@ -8,9 +8,21 @@ namespace WpfScreenHelper
         {
             get
             {
-                NativeMethods.POINT pt = new NativeMethods.POINT();
+                var pt = new NativeMethods.POINT();
                 NativeMethods.GetCursorPos(pt);
-                return new Point(pt.x, pt.y);
+                var point = new Point(pt.x, pt.y);
+
+                if (Screen.PerMonitorDpiAware)
+                {
+                    var pointStruct = new NativeMethods.POINTSTRUCT((int) point.X, (int) point.Y);
+
+                    var screen = Screen.FromPoint(pointStruct);
+
+                    if (!screen.ScaleFactor.Equals(1.0))
+                        point = new Point(pt.x / screen.ScaleFactor, pt.y / screen.ScaleFactor);
+                }
+
+                return point;
             }
         }
     }
