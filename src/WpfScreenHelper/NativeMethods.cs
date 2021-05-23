@@ -151,9 +151,10 @@ namespace WpfScreenHelper
         public class MONITORINFOEX
         {
             internal int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
-            internal int dwFlags = 0;
+
             internal RECT rcMonitor = new RECT();
             internal RECT rcWork = new RECT();
+            internal int dwFlags = 0;
 
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             internal char[] szDevice = new char[32];
