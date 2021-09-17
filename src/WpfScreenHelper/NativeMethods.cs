@@ -34,6 +34,29 @@ namespace WpfScreenHelper
             SM_CMONITORS = 80
         }
 
+        public enum SPI : uint
+        {
+            /// <summary>
+            /// Retrieves the size of the work area on the primary display monitor. The work area is the portion of the screen not obscured
+            /// by the system taskbar or by application desktop toolbars. The pvParam parameter must point to a RECT structure that receives
+            /// the coordinates of the work area, expressed in virtual screen coordinates.
+            /// To get the work area of a monitor other than the primary display monitor, call the GetMonitorInfo function.
+            /// </summary>
+            SPI_GETWORKAREA = 0x0030
+        }
+
+        [Flags]
+        public enum SPIF
+        {
+            None = 0x00,
+            /// <summary>Writes the new system-wide parameter setting to the user profile.</summary>
+            SPIF_UPDATEINIFILE = 0x01,
+            /// <summary>Broadcasts the WM_SETTINGCHANGE message after updating the user profile.</summary>
+            SPIF_SENDCHANGE = 0x02,
+            /// <summary>Same as SPIF_SENDCHANGE.</summary>
+            SPIF_SENDWININICHANGE = 0x02
+        }
+
         public const int SPI_GETWORKAREA = 48;
 
         public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
@@ -66,7 +89,7 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool SystemParametersInfo(int nAction, int nParam, ref RECT rc, int nUpdate);
+        public static extern bool SystemParametersInfo(SPI nAction, int nParam, ref RECT rc, SPIF nUpdate);
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
@@ -75,6 +98,9 @@ namespace WpfScreenHelper
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         public static extern bool GetCursorPos([In] [Out] POINT pt);
+
+        [DllImport(ExternDll.User32, SetLastError = true)]
+        public static extern bool IsProcessDPIAware();
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
