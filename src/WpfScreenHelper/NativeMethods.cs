@@ -67,17 +67,15 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX,
-            [Out] out uint dpiY);
+        public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In] [Out] MONITORINFOEX info);
+        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In][Out] MONITORINFOEX info);
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT rcClip, MonitorEnumProc lpfnEnum,
-            IntPtr dwData);
+        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT rcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
@@ -97,7 +95,7 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool GetCursorPos([In] [Out] POINT pt);
+        public static extern bool GetCursorPos([In][Out] POINT pt);
 
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool IsProcessDPIAware();
@@ -120,10 +118,10 @@ namespace WpfScreenHelper
 
             public RECT(Rect r)
             {
-                left = (int) r.Left;
-                top = (int) r.Top;
-                right = (int) r.Right;
-                bottom = (int) r.Bottom;
+                left = (int)r.Left;
+                top = (int)r.Top;
+                right = (int)r.Right;
+                bottom = (int)r.Bottom;
             }
 
             public static RECT FromXYWH(int x, int y, int width, int height)
@@ -200,10 +198,10 @@ namespace WpfScreenHelper
 
             public COMRECT(Rect r)
             {
-                left = (int) r.X;
-                top = (int) r.Y;
-                right = (int) r.Right;
-                bottom = (int) r.Bottom;
+                left = (int)r.X;
+                top = (int)r.Y;
+                right = (int)r.Right;
+                bottom = (int)r.Bottom;
             }
 
             public COMRECT(int left, int top, int right, int bottom)

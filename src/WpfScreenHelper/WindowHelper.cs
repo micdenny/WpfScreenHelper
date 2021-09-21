@@ -1,13 +1,11 @@
-﻿namespace WpfScreenHelper
+﻿using System;
+using System.Windows;
+using WpfScreenHelper.Enum;
+
+namespace WpfScreenHelper
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Media;
-
-    using WpfScreenHelper.Enum;
-
     /// <summary>
-    ///     Provides helper functions for window class.
+    /// Provides helper functions for window class.
     /// </summary>
     public static class WindowHelper
     {

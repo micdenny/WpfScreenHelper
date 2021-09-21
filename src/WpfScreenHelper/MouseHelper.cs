@@ -3,7 +3,7 @@
     using System.Windows;
 
     /// <summary>
-    ///     Provides helper functions for mouse cursor.
+    /// Provides helper functions for mouse cursor.
     /// </summary>
     public static class MouseHelper
     {

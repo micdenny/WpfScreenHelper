@@ -9,7 +9,7 @@
     using System.Windows.Interop;
 
     /// <summary>
-    ///     Represents a display device or multiple display devices on a single system.
+    /// Represents a display device or multiple display devices on a single system.
     /// </summary>
     public class Screen
     {
@@ -47,9 +47,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Screen"/> class.
         /// </summary>
-        /// <param name="monitor">
-        /// The monitor.
-        /// </param>
+        /// <param name="monitor">The monitor.</param>
         private Screen(IntPtr monitor)
             : this(monitor, IntPtr.Zero)
         {
@@ -58,12 +56,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Screen"/> class.
         /// </summary>
-        /// <param name="monitor">
-        /// The monitor.
-        /// </param>
-        /// <param name="hdc">
-        /// The hdc.
-        /// </param>
+        /// <param name="monitor">The monitor.</param>
+        /// <param name="hdc">The hdc.</param>
         private Screen(IntPtr monitor, IntPtr hdc)
         {
             if (NativeMethods.IsProcessDPIAware())
@@ -102,7 +96,7 @@
         }
 
         /// <summary>
-        ///     Gets an array of all displays on the system.
+        /// Gets an array of all displays on the system.
         /// </summary>
         /// <returns>An enumerable of type Screen, containing all displays on the system.</returns>
         public static IEnumerable<Screen> AllScreens
@@ -125,7 +119,7 @@
         }
 
         /// <summary>
-        ///     Gets the primary display.
+        /// Gets the primary display.
         /// </summary>
         /// <returns>The primary display.</returns>
         public static Screen PrimaryScreen
@@ -137,7 +131,7 @@
         }
 
         /// <summary>
-        ///     Gets the bounds of the display in units.
+        /// Gets the bounds of the display in units.
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" />, representing the bounds of the display in units.</returns>
         public Rect Bounds =>
@@ -150,32 +144,32 @@
                     this.PixelBounds.Height / this.ScaleFactor);
 
         /// <summary>
-        ///     Gets the device name associated with a display.
+        /// Gets the device name associated with a display.
         /// </summary>
         /// <returns>The device name associated with a display.</returns>
         public string DeviceName { get; }
 
         /// <summary>
-        ///     Gets the bounds of the display in pixels.
+        /// Gets the bounds of the display in pixels.
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" />, representing the bounds of the display in pixels.</returns>
         public Rect PixelBounds { get; }
 
         /// <summary>
-        ///     Gets a value indicating whether a particular display is the primary device.
+        /// Gets a value indicating whether a particular display is the primary device.
         /// </summary>
         /// <returns>true if this display is primary; otherwise, false.</returns>
         public bool Primary { get; }
 
         /// <summary>
-        ///     Gets the scale factor of the display.
+        /// Gets the scale factor of the display.
         /// </summary>
         /// <returns>The scale factor of the display.</returns>
         public double ScaleFactor { get; } = 1.0;
 
         /// <summary>
-        ///     Gets the working area of the display. The working area is the desktop area of the display, excluding task bars,
-        ///     docked windows, and docked tool bars in units.
+        /// Gets the working area of the display. The working area is the desktop area of the display, excluding task bars,
+        /// docked windows, and docked tool bars in units.
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" />, representing the working area of the display in units.</returns>
         public Rect WorkingArea
@@ -221,12 +215,12 @@
         }
 
         /// <summary>
-        ///     Retrieves a Screen for the display that contains the largest portion of the specified control.
+        /// Retrieves a Screen for the display that contains the largest portion of the specified control.
         /// </summary>
         /// <param name="hwnd">The window handle for which to retrieve the Screen.</param>
         /// <returns>
-        ///     A Screen for the display that contains the largest region of the object. In multiple display environments
-        ///     where no display contains any portion of the specified window, the display closest to the object is returned.
+        /// A Screen for the display that contains the largest region of the object. In multiple display environments
+        /// where no display contains any portion of the specified window, the display closest to the object is returned.
         /// </returns>
         public static Screen FromHandle(IntPtr hwnd)
         {
@@ -236,12 +230,12 @@
         }
 
         /// <summary>
-        ///     Retrieves a Screen for the display that contains the specified point in pixels.
+        /// Retrieves a Screen for the display that contains the specified point in pixels.
         /// </summary>
         /// <param name="point">A <see cref="T:System.Windows.Point" /> that specifies the location for which to retrieve a Screen.</param>
         /// <returns>
-        ///     A Screen for the display that contains the point in pixels. In multiple display environments where no display contains
-        ///     the point, the display closest to the specified point is returned.
+        /// A Screen for the display that contains the point in pixels. In multiple display environments where no display contains
+        /// the point, the display closest to the specified point is returned.
         /// </returns>
         public static Screen FromPoint(Point point)
         {
@@ -254,12 +248,12 @@
         }
 
         /// <summary>
-        ///     Retrieves a Screen for the display that contains the largest portion of the specified control.
+        /// Retrieves a Screen for the display that contains the largest portion of the specified control.
         /// </summary>
         /// <param name="window">The window for which to retrieve the Screen.</param>
         /// <returns>
-        ///     A Screen for the display that contains the largest region of the object. In multiple display environments
-        ///     where no display contains any portion of the specified window, the display closest to the object is returned.
+        /// A Screen for the display that contains the largest region of the object. In multiple display environments
+        /// where no display contains any portion of the specified window, the display closest to the object is returned.
         /// </returns>
         public static Screen FromWindow(Window window)
         {
@@ -267,12 +261,12 @@
         }
 
         /// <summary>
-        ///     Retrieves a Screen for the display that contains the specified point in units.
+        /// Retrieves a Screen for the display that contains the specified point in units.
         /// </summary>
         /// <param name="point">A <see cref="T:System.Windows.Point" /> that specifies the location for which to retrieve a Screen.</param>
         /// <returns>
-        ///     A Screen for the display that contains the point in units. In multiple display environments where no display contains
-        ///     the point, the display closest to the specified point is returned.
+        /// A Screen for the display that contains the point in units. In multiple display environments where no display contains
+        /// the point, the display closest to the specified point is returned.
         /// </returns>
         public static Screen FromWpfPoint(Point point)
         {
@@ -291,7 +285,7 @@
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the specified object is equal to this Screen.
+        /// Gets or sets a value indicating whether the specified object is equal to this Screen.
         /// </summary>
         /// <param name="obj">The object to compare to this Screen.</param>
         /// <returns>true if the specified object is equal to this Screen; otherwise, false.</returns>
@@ -309,7 +303,7 @@
         }
 
         /// <summary>
-        ///     Computes and retrieves a hash code for an object.
+        /// Computes and retrieves a hash code for an object.
         /// </summary>
         /// <returns>A hash code for an object.</returns>
         public override int GetHashCode()

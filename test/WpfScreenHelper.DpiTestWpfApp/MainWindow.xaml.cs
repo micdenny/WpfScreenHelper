@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using WpfScreenHelper;
 
-namespace DpiTest
+namespace WpfScreenHelper.DpiTestWpfApp
 {
-    public partial class MainWindow
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
