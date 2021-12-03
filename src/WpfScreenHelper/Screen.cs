@@ -62,8 +62,28 @@
         {
             if (NativeMethods.IsProcessDPIAware())
             {
-                NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out var dpiX, out _);
+                uint dpiX;
 
+                try
+                {
+                    NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
+                }
+                catch
+                {
+                    // Windows 7 fallback
+                    var hr = NativeMethods.D2D1CreateFactory(NativeMethods.D2D1_FACTORY_TYPE.D2D1_FACTORY_TYPE_SINGLE_THREADED, typeof(NativeMethods.ID2D1Factory).GUID, IntPtr.Zero, out var factory);
+                    if (hr < 0)
+                    {
+                        dpiX = 96;
+                    }
+                    else
+                    {
+                        factory.GetDesktopDpi(out var x, out _);
+                        Marshal.ReleaseComObject(factory);
+                        dpiX = (uint)x;
+                    }
+                }
+                
                 this.ScaleFactor = dpiX / 96.0;
             }
 
