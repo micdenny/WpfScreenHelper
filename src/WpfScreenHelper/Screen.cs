@@ -29,7 +29,6 @@
         private const int PRIMARY_MONITOR = unchecked((int)0xBAADF00D);
 
         private const int MONITORINFOF_PRIMARY = 0x00000001;
-        private const int MONITOR_DEFAULTTONEAREST = 0x00000002;
 
         /// <summary>
         /// The monitor handle.
@@ -66,7 +65,15 @@
 
                 try
                 {
-                    NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
+                    if (monitor == (IntPtr)PRIMARY_MONITOR)
+                    {
+                        var ptr = NativeMethods.MonitorFromPoint(new NativeMethods.POINTSTRUCT(0, 0), NativeMethods.MonitorDefault.MONITOR_DEFAULTTOPRIMARY);
+                        NativeMethods.GetDpiForMonitor(ptr, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
+                    }
+                    else
+                    {
+                        NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
+                    }
                 }
                 catch
                 {
@@ -262,7 +269,7 @@
             if (MultiMonitorSupport)
             {
                 var pt = new NativeMethods.POINTSTRUCT((int)point.X, (int)point.Y);
-                return new Screen(NativeMethods.MonitorFromPoint(pt, MONITOR_DEFAULTTONEAREST));
+                return new Screen(NativeMethods.MonitorFromPoint(pt, NativeMethods.MonitorDefault.MONITOR_DEFAULTTONEAREST));
             }
             return new Screen((IntPtr)PRIMARY_MONITOR);
         }

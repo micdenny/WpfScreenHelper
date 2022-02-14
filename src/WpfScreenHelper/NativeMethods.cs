@@ -16,13 +16,6 @@ namespace WpfScreenHelper
             RAW = 2
         }
 
-        public enum PROCESS_DPI_AWARENESS
-        {
-            PROCESS_DPI_UNAWARE = 0,
-            PROCESS_SYSTEM_DPI_AWARE = 1,
-            PROCESS_PER_MONITOR_DPI_AWARE = 2
-        }
-
         public enum SystemMetric
         {
             SM_CXSCREEN = 0,
@@ -56,6 +49,16 @@ namespace WpfScreenHelper
             /// <summary>Same as SPIF_SENDCHANGE.</summary>
             SPIF_SENDWININICHANGE = 0x02
         }
+        
+        public enum MonitorDefault
+        {
+            /// <summary>If the point is not contained within any display monitor, return a handle to the display monitor that is nearest to the point.</summary>
+            MONITOR_DEFAULTTONEAREST = 0x00000002,
+            /// <summary>If the point is not contained within any display monitor, return NULL.</summary>
+            MONITOR_DEFAULTTONULL = 0x00000000,
+            /// <summary>If the point is not contained within any display monitor, return a handle to the primary display monitor.</summary>
+            MONITOR_DEFAULTTOPRIMARY = 0x00000001
+        }
 
         public enum D2D1_FACTORY_TYPE
         {
@@ -66,11 +69,7 @@ namespace WpfScreenHelper
         public const int SPI_GETWORKAREA = 48;
 
         public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
-
-        [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
-        [ResourceExposure(ResourceScope.None)]
-        public static extern int GetProcessDpiAwareness(IntPtr hprocess, out PROCESS_DPI_AWARENESS value);
-
+        
         [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
@@ -97,7 +96,7 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern IntPtr MonitorFromPoint(POINTSTRUCT pt, int flags);
+        public static extern IntPtr MonitorFromPoint(POINTSTRUCT pt, MonitorDefault flags);
 
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
