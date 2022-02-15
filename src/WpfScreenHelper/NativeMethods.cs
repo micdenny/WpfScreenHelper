@@ -42,20 +42,25 @@ namespace WpfScreenHelper
         public enum SPIF
         {
             None = 0x00,
+
             /// <summary>Writes the new system-wide parameter setting to the user profile.</summary>
             SPIF_UPDATEINIFILE = 0x01,
+
             /// <summary>Broadcasts the WM_SETTINGCHANGE message after updating the user profile.</summary>
             SPIF_SENDCHANGE = 0x02,
+
             /// <summary>Same as SPIF_SENDCHANGE.</summary>
             SPIF_SENDWININICHANGE = 0x02
         }
-        
+
         public enum MonitorDefault
         {
             /// <summary>If the point is not contained within any display monitor, return a handle to the display monitor that is nearest to the point.</summary>
             MONITOR_DEFAULTTONEAREST = 0x00000002,
+
             /// <summary>If the point is not contained within any display monitor, return NULL.</summary>
             MONITOR_DEFAULTTONULL = 0x00000000,
+
             /// <summary>If the point is not contained within any display monitor, return a handle to the primary display monitor.</summary>
             MONITOR_DEFAULTTOPRIMARY = 0x00000001
         }
@@ -66,10 +71,8 @@ namespace WpfScreenHelper
             D2D1_FACTORY_TYPE_MULTI_THREADED = 1,
         }
 
-        public const int SPI_GETWORKAREA = 48;
-
         public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
-        
+
         [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
@@ -104,6 +107,9 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool IsProcessDPIAware();
+
+        [DllImport(ExternDll.User32, SetLastError = true)]
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
         [DllImport(ExternDll.D2D1)]
         public static extern int D2D1CreateFactory(D2D1_FACTORY_TYPE factoryType, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, IntPtr pFactoryOptions, out ID2D1Factory ppIFactory);
@@ -172,10 +178,12 @@ namespace WpfScreenHelper
             }
 
 #if DEBUG
+
             public override string ToString()
             {
                 return "{x=" + x + ", y=" + y + "}";
             }
+
 #endif
         }
 

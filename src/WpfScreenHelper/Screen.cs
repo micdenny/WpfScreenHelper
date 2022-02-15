@@ -90,7 +90,7 @@
                         dpiX = (uint)x;
                     }
                 }
-                
+
                 this.ScaleFactor = dpiX / 96.0;
             }
 
@@ -100,7 +100,7 @@
                     NativeMethods.GetSystemMetrics(NativeMethods.SystemMetric.SM_CXSCREEN),
                     NativeMethods.GetSystemMetrics(NativeMethods.SystemMetric.SM_CYSCREEN));
 
-                this.PixelBounds = new Rect(0, 0, size.Width, size.Height);
+                this.Bounds = new Rect(0, 0, size.Width, size.Height);
                 this.Primary = true;
                 this.DeviceName = "DISPLAY";
             }
@@ -110,7 +110,7 @@
 
                 NativeMethods.GetMonitorInfo(new HandleRef(null, monitor), info);
 
-                this.PixelBounds = new Rect(
+                this.Bounds = new Rect(
                     info.rcMonitor.left,
                     info.rcMonitor.top,
                     info.rcMonitor.right - info.rcMonitor.left,
@@ -161,14 +161,14 @@
         /// Gets the bounds of the display in units.
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" />, representing the bounds of the display in units.</returns>
-        public Rect Bounds =>
+        public Rect WpfBounds =>
             this.ScaleFactor.Equals(1.0)
-                ? this.PixelBounds
+                ? this.Bounds
                 : new Rect(
-                    this.PixelBounds.X / this.ScaleFactor,
-                    this.PixelBounds.Y / this.ScaleFactor,
-                    this.PixelBounds.Width / this.ScaleFactor,
-                    this.PixelBounds.Height / this.ScaleFactor);
+                    this.Bounds.X / this.ScaleFactor,
+                    this.Bounds.Y / this.ScaleFactor,
+                    this.Bounds.Width / this.ScaleFactor,
+                    this.Bounds.Height / this.ScaleFactor);
 
         /// <summary>
         /// Gets the device name associated with a display.
@@ -180,7 +180,7 @@
         /// Gets the bounds of the display in pixels.
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" />, representing the bounds of the display in pixels.</returns>
-        public Rect PixelBounds { get; }
+        public Rect Bounds { get; }
 
         /// <summary>
         /// Gets a value indicating whether a particular display is the primary device.
@@ -196,9 +196,9 @@
 
         /// <summary>
         /// Gets the working area of the display. The working area is the desktop area of the display, excluding task bars,
-        /// docked windows, and docked tool bars in units.
+        /// docked windows, and docked tool bars in pixels.
         /// </summary>
-        /// <returns>A <see cref="T:System.Windows.Rect" />, representing the working area of the display in units.</returns>
+        /// <returns>A <see cref="T:System.Windows.Rect" />, representing the working area of the display in pixels.</returns>
         public Rect WorkingArea
         {
             get
@@ -211,35 +211,33 @@
 
                     NativeMethods.SystemParametersInfo(NativeMethods.SPI.SPI_GETWORKAREA, 0, ref rc, NativeMethods.SPIF.SPIF_SENDCHANGE);
 
-                    workingArea = this.ScaleFactor.Equals(1.0)
-                                      ? new Rect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top)
-                                      : new Rect(
-                                          rc.left / this.ScaleFactor,
-                                          rc.top / this.ScaleFactor,
-                                          (rc.right - rc.left) / this.ScaleFactor,
-                                          (rc.bottom - rc.top) / this.ScaleFactor);
+                    workingArea = new Rect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
                 }
                 else
                 {
                     var info = new NativeMethods.MONITORINFOEX();
                     NativeMethods.GetMonitorInfo(new HandleRef(null, this.monitorHandle), info);
 
-                    workingArea = this.ScaleFactor.Equals(1.0)
-                                      ? new Rect(
-                                          info.rcWork.left,
-                                          info.rcWork.top,
-                                          info.rcWork.right - info.rcWork.left,
-                                          info.rcWork.bottom - info.rcWork.top)
-                                      : new Rect(
-                                          info.rcWork.left / this.ScaleFactor,
-                                          info.rcWork.top / this.ScaleFactor,
-                                          (info.rcWork.right - info.rcWork.left) / this.ScaleFactor,
-                                          (info.rcWork.bottom - info.rcWork.top) / this.ScaleFactor);
+                    workingArea = new Rect(info.rcWork.left, info.rcWork.top, info.rcWork.right - info.rcWork.left, info.rcWork.bottom - info.rcWork.top);
                 }
 
                 return workingArea;
             }
         }
+
+        /// <summary>
+        /// Gets the working area of the display. The working area is the desktop area of the display, excluding task bars,
+        /// docked windows, and docked tool bars in units.
+        /// </summary>
+        /// <returns>A <see cref="T:System.Windows.Rect" />, representing the working area of the display in units.</returns>
+        public Rect WpfWorkingArea =>
+            this.ScaleFactor.Equals(1.0)
+                ? this.WorkingArea
+                : new Rect(
+                    this.WorkingArea.X / this.ScaleFactor,
+                    this.WorkingArea.Y / this.ScaleFactor,
+                    this.WorkingArea.Width / this.ScaleFactor,
+                    this.WorkingArea.Height / this.ScaleFactor);
 
         /// <summary>
         /// Retrieves a Screen for the display that contains the largest portion of the specified control.
@@ -271,6 +269,7 @@
                 var pt = new NativeMethods.POINTSTRUCT((int)point.X, (int)point.Y);
                 return new Screen(NativeMethods.MonitorFromPoint(pt, NativeMethods.MonitorDefault.MONITOR_DEFAULTTONEAREST));
             }
+
             return new Screen((IntPtr)PRIMARY_MONITOR);
         }
 
@@ -285,30 +284,6 @@
         public static Screen FromWindow(Window window)
         {
             return FromHandle(new WindowInteropHelper(window).Handle);
-        }
-
-        /// <summary>
-        /// Retrieves a Screen for the display that contains the specified point in units.
-        /// </summary>
-        /// <param name="point">A <see cref="T:System.Windows.Point" /> that specifies the location for which to retrieve a Screen.</param>
-        /// <returns>
-        /// A Screen for the display that contains the point in units. In multiple display environments where no display contains
-        /// the point, the display closest to the specified point is returned.
-        /// </returns>
-        public static Screen FromWpfPoint(Point point)
-        {
-            if (MultiMonitorSupport)
-            {
-                foreach (var screen in AllScreens)
-                {
-                    if (screen.Bounds.Contains(point))
-                    {
-                        return screen;
-                    }
-                }
-            }
-
-            return new Screen((IntPtr)PRIMARY_MONITOR);
         }
 
         /// <summary>
