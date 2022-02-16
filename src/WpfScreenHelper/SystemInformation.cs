@@ -51,10 +51,10 @@ namespace WpfScreenHelper
                         },
                         (accumulator, s) => new
                         {
-                            xMin = Math.Min(s.Bounds.X, accumulator.xMin),
-                            yMin = Math.Min(s.Bounds.Y, accumulator.yMin),
-                            xMax = Math.Max(s.Bounds.Right, accumulator.xMax),
-                            yMax = Math.Max(s.Bounds.Bottom, accumulator.yMax)
+                            xMin = Math.Min(s.WpfBounds.X, accumulator.xMin),
+                            yMin = Math.Min(s.WpfBounds.Y, accumulator.yMin),
+                            xMax = Math.Max(s.WpfBounds.Right, accumulator.xMax),
+                            yMax = Math.Max(s.WpfBounds.Bottom, accumulator.yMax)
                         });
 
                     return new Rect(values.xMin, values.yMin, values.xMax - values.xMin, values.yMax - values.yMin);
@@ -69,5 +69,11 @@ namespace WpfScreenHelper
         /// </summary>
         /// <returns>A <see cref="T:System.Windows.Rect" /> that represents the size, in pixels, of the working area of the screen.</returns>
         public static Rect WorkingArea => Screen.PrimaryScreen.WorkingArea;
+
+        /// <summary>
+        /// Gets the size, in units, of the working area of the screen.
+        /// </summary>
+        /// <returns>A <see cref="T:System.Windows.Rect" /> that represents the size, in units, of the working area of the screen.</returns>
+        public static Rect WpfWorkingArea => Screen.PrimaryScreen.WpfWorkingArea;
     }
 }

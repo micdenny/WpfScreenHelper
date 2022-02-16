@@ -1,7 +1,7 @@
-﻿namespace WpfScreenHelper
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace WpfScreenHelper
+{
     /// <summary>
     /// Provides helper functions for mouse cursor.
     /// </summary>
