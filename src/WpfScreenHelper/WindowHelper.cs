@@ -44,10 +44,21 @@ namespace WpfScreenHelper
         /// </summary>
         public static Rect GetWindowAbsolutePlacement(this Window window)
         {
+            var placement = GetWindowPlacement(window);
+
+            return new Rect(
+                Math.Abs(placement.Left),
+                Math.Abs(placement.Top),
+                placement.Width,
+                placement.Height);
+        }
+
+        public static Rect GetWindowPlacement(this Window window)
+        {
             var screen = Screen.FromWindow(window);
 
-            var left = Math.Abs(screen.WpfBounds.Left - window.Left) * screen.ScaleFactor;
-            var top = Math.Abs(screen.WpfBounds.Top - window.Top) * screen.ScaleFactor;
+            var left = (screen.WpfBounds.Left - window.Left) * screen.ScaleFactor;
+            var top = (screen.WpfBounds.Top - window.Top) * screen.ScaleFactor;
             var width = window.Width * screen.ScaleFactor;
             var height = window.Height * screen.ScaleFactor;
 
