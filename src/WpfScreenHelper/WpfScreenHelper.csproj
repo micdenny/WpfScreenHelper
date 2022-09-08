@@ -14,7 +14,7 @@
     <PackageTags>WPF Screen Monitor Display Helper</PackageTags>
     <RepositoryUrl>https://github.com/micdenny/WpfScreenHelper</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
