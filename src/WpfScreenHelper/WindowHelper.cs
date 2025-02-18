@@ -20,6 +20,8 @@ namespace WpfScreenHelper
         /// <param name="height">New height of the window.</param>
         public static void SetWindowPosition(this Window window, int x, int y, int width, int height)
         {
+            //Force to normal to allow setting the window position
+            window.WindowState = WindowState.Normal;
             // The first move puts it on the correct monitor, which triggers WM_DPICHANGED
             // The +1/-1 coerces WPF to update Window.Top/Left/Width/Height in the second move
             NativeMethods.MoveWindow(new WindowInteropHelper(window).Handle, x - 1, y, width + 1, height, false);
@@ -135,7 +137,7 @@ namespace WpfScreenHelper
                         return new Rect(screen.WpfBounds.X * screen.ScaleFactor, y * screen.ScaleFactor, window.Width * screen.ScaleFactor, window.Height * screen.ScaleFactor);
                     }
 
-                case WindowPositions.Maximize:
+                case WindowPositions.Fill:
                     return new Rect(screen.WpfBounds.X * screen.ScaleFactor, screen.WpfBounds.Y * screen.ScaleFactor, screen.WpfBounds.Width * screen.ScaleFactor, screen.WpfBounds.Height * screen.ScaleFactor);
 
                 default:

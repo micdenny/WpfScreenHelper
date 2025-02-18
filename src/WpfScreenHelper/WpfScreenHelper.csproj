@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFrameworks>net40;net6.0-windows;net8.0-windows</TargetFrameworks>
@@ -14,7 +14,8 @@
     <PackageTags>WPF Screen Monitor Display Helper</PackageTags>
     <RepositoryUrl>https://github.com/micdenny/WpfScreenHelper</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>2.1.1</Version>
+    <Version>2.2.1</Version>
+    <FileVersion>2025.2.18.3</FileVersion>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">

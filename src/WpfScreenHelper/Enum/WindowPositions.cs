@@ -11,6 +11,6 @@
         TopRight,
         BottomRight,
         BottomLeft,
-        Maximize
+        Fill
     }
 }

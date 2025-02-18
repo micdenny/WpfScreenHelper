@@ -4,31 +4,111 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Name="Wnd" 
-        Height="400" Width="700" SnapsToDevicePixels="True" WindowStyle="None" ResizeMode="NoResize"
-        Loaded="MainWindow_OnLoaded" MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown">
+        Title="MainWindow"
+        Name="Wnd"
+        Height="400"
+        Width="700"
+        SnapsToDevicePixels="True"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Loaded="MainWindow_OnLoaded"
+        MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown">
     <Grid>
-        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Width="100" Height="50" Content="Position Maximize" Margin="5" Click="ButtonMaximize_OnClick"/>
-            <Button Width="100" Height="50" Content="Position Center"  Margin="5" Click="ButtonCenter_OnClick"/>
+        <StackPanel Margin="5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Button Width="210"
+                        Height="50"
+                        Content="Position Center"
+                        Margin="5"
+                        Click="ButtonCenter_OnClick" />
+
+            <ComboBox Name="Monitors"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Top"
+                      Width="210" />
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100"
+                        Height="50"
+                        Content="Fill to Screen"
+                        Margin="5"
+                        Click="ButtonFillToScreen_OnClick" />
+                <Button Width="100"
+                        Height="50"
+                        Content="origine Size"
+                        Margin="5"
+                        Click="ButtonOrigine_OnClick" />
+            </StackPanel>
         </StackPanel>
 
-        <Button Width="200" Height="50" Content="Position Left" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonLeft_OnClick"/>
-        <Button Width="200" Height="50" Content="Position Right" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ButtonRight_OnClick"/>
-        <Button Width="200" Height="50" Content="Position Top" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ButtonTop_OnClick"/>
-        <Button Width="200" Height="50" Content="Position Bottom" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="ButtonBottom_OnClick"/>
-        <Button Width="200" Height="50" Content="Position TopLeft" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonTopLeft_OnClick"/>
-        <Button Width="200" Height="50" Content="Position TopRight" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonTopRight_OnClick"/>
-        <Button Width="200" Height="50" Content="Position BottomRight" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ButtonBottomRight_OnClick"/>
-        <Button Width="200" Height="50" Content="Position BottomLeft" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ButtonBottomLeft_OnClick"/>
+        <Button Width="200"
+                Height="50"
+                Content="Position Left"
+                Margin="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Click="ButtonLeft_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position Right"
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="ButtonRight_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position Top"
+                Margin="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Click="ButtonTop_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position Bottom"
+                Margin="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Click="ButtonBottom_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position TopLeft"
+                Margin="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="ButtonTopLeft_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position TopRight"
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="ButtonTopRight_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position BottomRight"
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Click="ButtonBottomRight_OnClick" />
+        <Button Width="200"
+                Height="50"
+                Content="Position BottomLeft"
+                Margin="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="ButtonBottomLeft_OnClick" />
 
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,70">
-            <TextBlock Text="{Binding ElementName=Wnd, Path=Width, StringFormat='Width: {0}'}"/>
-            <TextBlock Text="{Binding ElementName=Wnd, Path=Height, StringFormat='Height: {0}'}"/>
-            <TextBlock Text="{Binding ElementName=Wnd, Path=Left, StringFormat='Left: {0}'}"/>
-            <TextBlock Text="{Binding ElementName=Wnd, Path=Top, StringFormat='Top: {0}'}"/>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="5,0,0,70">
+            <TextBlock Text="{Binding ElementName=Wnd, Path=Width, StringFormat='Width: {0}'}" />
+            <TextBlock Text="{Binding ElementName=Wnd, Path=Height, StringFormat='Height: {0}'}" />
+            <TextBlock Text="{Binding ElementName=Wnd, Path=Left, StringFormat='Left: {0}'}" />
+            <TextBlock Text="{Binding ElementName=Wnd, Path=Top, StringFormat='Top: {0}'}" />
         </StackPanel>
 
-        <ComboBox Name="Monitors" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
+        
     </Grid>
 </Window>

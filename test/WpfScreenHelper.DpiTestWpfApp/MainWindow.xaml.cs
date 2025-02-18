@@ -25,9 +25,9 @@ namespace WpfScreenHelper.DpiTestWpfApp
             Monitors.SelectedIndex = 0;
         }
 
-        private void ButtonMaximize_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonFillToScreen_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SetWindowPosition(WindowPositions.Maximize, Screen.AllScreens.ElementAt(Monitors.SelectedIndex));
+            this.SetWindowPosition(WindowPositions.Fill, Screen.AllScreens.ElementAt(Monitors.SelectedIndex));
         }
 
         private void ButtonCenter_OnClick(object sender, RoutedEventArgs e)
@@ -78,6 +78,14 @@ namespace WpfScreenHelper.DpiTestWpfApp
         private void MainWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void ButtonOrigine_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Height = 400;
+            this.Width = 700;
+            this.SetWindowPosition(WindowPositions.Center, Screen.AllScreens.ElementAt(Monitors.SelectedIndex));
+
         }
     }
 }
